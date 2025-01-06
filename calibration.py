@@ -7,8 +7,8 @@ import cv2 as cv
 
 ####### FIND CHESSBOARD CORNERS - OBJECT POINTS AND IMAGE POINTS #######
 
-CHESSBOARDSIZE = (11,8)
-SIZE_OF_CHESSBOARD_SQUARES_MM = 20
+CHESSBOARDSIZE = (10,7)
+SIZE_OF_CHESSBOARD_SQUARES_MM = 24
 
 
 # termination criteria
@@ -30,7 +30,6 @@ imgpoints = [] # 2d points in image plane.
 images = glob.glob('./images/*.png')
 
 for image in images:
-
     img = cv.imread(image)
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
@@ -39,7 +38,6 @@ for image in images:
 
     # If found, add object points, image points (after refining them)
     if ret :
-
         objpoints.append(objp)
         corners2 = cv.cornerSubPix(gray, corners, (11,11), (-1,-1), criteria)
         imgpoints.append(corners)
@@ -47,7 +45,7 @@ for image in images:
         # Draw and display the corners
         cv.drawChessboardCorners(img, CHESSBOARDSIZE, corners2, ret)
         cv.imshow('img', img)
-        cv.waitKey(1000)
+        cv.waitKey(100)
 
 
 cv.destroyAllWindows()
@@ -101,7 +99,7 @@ cv.imwrite('initUndistortRectifyMap_caliResult2.png', dst)
 # Reprojection Error
 mean_error = 0
 
-for i, obj in objpoints:
+for i, obj in enumerate(objpoints):
     imgpoints2, _ = cv.projectPoints(obj, rvecs[i], tvecs[i], cameraMatrix, dist)
     error = cv.norm(imgpoints[i], imgpoints2, cv.NORM_L2)/len(imgpoints2)
     mean_error += error
