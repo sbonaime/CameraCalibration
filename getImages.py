@@ -1,6 +1,7 @@
+import sys
 import cv2
 
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(0)
 
 num = 0
 
@@ -10,10 +11,10 @@ while cap.isOpened():
 
     k = cv2.waitKey(5)
 
-    if k == 27:
-        break
-    elif k == ord('s'): # wait for 's' key to save and exit
-        cv2.imwrite('images/img' + str(num) + '.png', img)
+    if k == ord('q'): # wait for 'q' key to exit
+        sys.exit()
+    elif k == ord('s'): # wait for 's' key to save frame
+        cv2.imwrite(f'images/img{str(num)}.png', img)
         print("image saved!")
         num += 1
 
