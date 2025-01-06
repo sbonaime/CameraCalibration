@@ -12,7 +12,7 @@ while cap.isOpened():
     k = cv2.waitKey(5)
 
     if k == ord('q'): # wait for 'q' key to exit
-        sys.exit()
+        break
     elif k == ord('s'): # wait for 's' key to save frame
         cv2.imwrite(f'images/img{str(num)}.png', img)
         print("image saved!")
